@@ -17,7 +17,7 @@ animations that they pass along to other widgets.
 
 Flutter 中的动画系统基于类型化的 [`Animation`](https://docs.flutter.io/flutter/animation/Animation-class.html) 对象。Widget 可以直接通过读取它们的当前值并聆听它们的状态变化来将这些动画结合到它们的构建函数中，或者可以使用动画作为它们传递给其他 widget 的更精细动画的基础。
 
-## Animation 动画
+## Animation
 
 The primary building block of the animation system is the
 [`Animation`](https://docs.flutter.io/flutter/animation/Animation-class.html)
@@ -25,6 +25,8 @@ class.  An animation represents a value of a specific type that can change
 over the lifetime of the animation. Most widgets that perform an animation
 receive an `Animation` object as a parameter, from which they read the current
 value of the animation and to which they listen for changes to that value.
+
+动画系统的主要构建模块是 [`Animation`](https://docs.flutter.io/flutter/animation/Animation-class.html) 类。动画表示可以在动画的整个生命周期内改变的特定类型的值。大多数执行动画的 widget 都会接收一个 `Animation` 对象作为参数，从中读取动画的当前值，并监听该值的更改。
 
 ### `addListener`
 
@@ -37,6 +39,8 @@ object that listens to an animation will call
 itself in its listener callback to notify the widget system that it needs to
 rebuild with the new value of the animation.
 
+只要动画的值发生变化，动画就会通知所有添加了 [ `addListener`](https://docs.flutter.io/flutter/animation/Animation/addListener.html) 的监听器。通常情况下，监听动画的 [`State`](https://docs.flutter.io/flutter/widgets/State-class.html) 对象会在其侦听器回调中调用 [`setState`](https://docs.flutter.io/flutter/widgets/State/setState.html) 来通知 widget 系统它需要使用动画的新值重新生成。
+
 This pattern is so common that there are two widgets that help widgets rebuild
 when animations change value:
 [`AnimatedWidget`](https://docs.flutter.io/flutter/widgets/AnimatedWidget-class.html)
@@ -48,6 +52,8 @@ To use `AnimatedWidget`, simply subclass it and implement the
 function. The second, `AnimatedBuilder`, is useful for more complex widgets
 that wish to include an animation as part of a larger build function. To use
 `AnimatedBuilder`, simply construct the widget and pass it a `builder` function.
+
+这种模式非常常见，以至于在动画更改值时，有两个 widget 可帮助 widget 重建：[`AnimatedWidget`](https://docs.flutter.io/flutter/widgets/AnimatedWidget-class.html) 和 [`AnimatedBuilder`](https://docs.flutter.io/flutter/widgets/AnimatedBuilder-class.html) 。第一个 `AnimatedWidget` 对于无状态动画 widget 非常有用。要使用 `AnimatedWidget`，只需将其子类化并实现 [`build`](https://docs.flutter.io/flutter/widgets/AnimatedWidget/build.html) 函数。第二个 `AnimatedBuilder` 对于更复杂的 widget 很有用，它们希望将动画作为更大构建函数的一部分。要使用 `AnimatedBuilder` ，只需构建 widget 并将其传递给 `builder` 函数。
 
 ### `addStatusListener`
 
@@ -62,6 +68,8 @@ to 1.0 will be `dismissed` when their value is 0.0. An animation might then run
 `forward` (e.g., from 0.0 to 1.0) or perhaps in `reverse` (e.g., from 1.0 to
 0.0). Eventually, if the animation reaches the end of its range (e.g., 1.0), the
 animation reaches the `completed` status.
+
+动画还提供了 [`AnimationStatus`](https://docs.flutter.io/flutter/animation/AnimationStatus-class.html) ，它表明了动画将随着时间的推移而如何变化。只要动画的状态变化，动画就会通知所有添加了 [`addStatusListener`](https://docs.flutter.io/flutter/animation/Animation/addStatusListener.html) 的监听器。通常情况下，动画始于 `dismissed` 状态，这意味着它们处于其范围的开始。举个例子，从 0.0 到 1.0 的动画将在值为 0.0 时，处于 `dismissed` 状态。
 
 ## AnimationController
 
